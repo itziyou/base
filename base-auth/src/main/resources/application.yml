@@ -5,19 +5,32 @@ spring:
   application:
     name: BASE-Auth
 
+  redis:
+    host: 192.168.56.129
+    database: 1
+    password: 123456
+    port: 6666
+    jedis:
+      pool:
+        max-active: 2000
+        max-wait: 10000
+        min-idle: 8
+        max-idle: 500
+    timeout: 5000
+
 eureka:
   instance:
-    # ÏòEureka ·şÎñ¶Ë·¢ËÍĞÄÌøµÄ¼ä¸ôÊ±¼ä£¬µ¥Î»ÎªÃë£¬ÓÃÓÚ·şÎñĞøÔ¼¡£ÕâÀïÅäÖÃÎª20Ãë£¬¼´Ã¿¸ô20ÃëÏòbase-register·¢ËÍĞÄÌø£¬±íÃ÷µ±Ç°·şÎñÃ»ÓĞå´»ú
+    # å‘Eureka æœåŠ¡ç«¯å‘é€å¿ƒè·³çš„é—´éš”æ—¶é—´ï¼Œå•ä½ä¸ºç§’ï¼Œç”¨äºæœåŠ¡ç»­çº¦ã€‚è¿™é‡Œé…ç½®ä¸º20ç§’ï¼Œå³æ¯éš”20ç§’å‘base-registerå‘é€å¿ƒè·³ï¼Œè¡¨æ˜å½“å‰æœåŠ¡æ²¡æœ‰å®•æœº
     lease-renewal-interval-in-seconds: 20
   client:
-    # ÎªtrueÊ±±íÊ¾½«µ±Ç°·şÎñ×¢²áµ½Eureak·şÎñ¶Ë
+    # ä¸ºtrueæ—¶è¡¨ç¤ºå°†å½“å‰æœåŠ¡æ³¨å†Œåˆ°EureakæœåŠ¡ç«¯
     register-with-eureka: true
-    # ÎªtrueÊ±±íÊ¾´ÓEureka ·şÎñ¶Ë»ñÈ¡×¢²áµÄ·şÎñĞÅÏ¢
+    # ä¸ºtrueæ—¶è¡¨ç¤ºä»Eureka æœåŠ¡ç«¯è·å–æ³¨å†Œçš„æœåŠ¡ä¿¡æ¯
     fetch-registry: true
-    # ĞÂÊµÀıĞÅÏ¢µÄ±ä»¯µ½Eureka·şÎñ¶ËµÄ¼ä¸ôÊ±¼ä£¬µ¥Î»ÎªÃë
+    # æ–°å®ä¾‹ä¿¡æ¯çš„å˜åŒ–åˆ°EurekaæœåŠ¡ç«¯çš„é—´éš”æ—¶é—´ï¼Œå•ä½ä¸ºç§’
     instance-info-replication-interval-seconds: 30
-    # Ä¬ÈÏÖµÎª30Ãë£¬¼´Ã¿30ÃëÈ¥Eureka·şÎñ¶ËÉÏ»ñÈ¡·şÎñ²¢»º´æ£¬ÕâÀïÖ¸¶¨Îª3ÃëµÄÔ­ÒòÊÇ·½±ã¿ª·¢Ê±²âÊÔ£¬Êµ¼Ê¿ÉÒÔÖ¸¶¨ÎªÄ¬ÈÏÖµ¼´¿É
+    # é»˜è®¤å€¼ä¸º30ç§’ï¼Œå³æ¯30ç§’å»EurekaæœåŠ¡ç«¯ä¸Šè·å–æœåŠ¡å¹¶ç¼“å­˜ï¼Œè¿™é‡ŒæŒ‡å®šä¸º3ç§’çš„åŸå› æ˜¯æ–¹ä¾¿å¼€å‘æ—¶æµ‹è¯•ï¼Œå®é™…å¯ä»¥æŒ‡å®šä¸ºé»˜è®¤å€¼å³å¯
     registry-fetch-interval-seconds: 3
     service-url:
-      # Ö¸¶¨Eureka·şÎñ¶ËµØÖ·
+      # æŒ‡å®šEurekaæœåŠ¡ç«¯åœ°å€
       defaultZone: http://admin:123456@localhost:8001/register/eureka/
