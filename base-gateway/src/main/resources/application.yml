@@ -1,0 +1,40 @@
+server:
+  port: 8301
+
+spring:
+  application:
+    name: BASE-Gateway
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 20
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    instance-info-replication-interval-seconds: 30
+    registry-fetch-interval-seconds: 3
+    serviceUrl:
+      defaultZone: http://admin:123456@localhost:8001/register/eureka/
+
+zuul:
+  routes:
+    auth:
+      # 所有以 /auth 开头的请求都会被转发到名称为 BASE-Auth 的服务上
+      path: /auth/**
+      serviceId: BASE-Auth
+      # 由于我们需要在请求头中携带令牌，所以sensitiveHeaders设置为*，表示不过滤请求头信息，即请求的请求头信息将原封不动的转发出去
+      sensitiveHeaders: "*"
+  # 设置为true时，表示开启重试机制
+  retryable: true
+  # Zuul配合Eureka后会有一套默认的配置规则，这里我们只想请求根据我们显示配置的路由规则走，所以设置为*，表示关闭所有默认路由配置规则
+  ignored-services: "*"
+  ribbon:
+    eager-load:
+      # 设置为true的时候表示开启Ribbon的饥饿加载模式，即在应用启动的时候就去获取相应的Client备用
+      enabled: true
+
+# 设置请求超时时间，单位为毫秒
+ribbon:
+  ReadTimeout: 3000
