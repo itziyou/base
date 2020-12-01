@@ -16,6 +16,7 @@
         <module>../base-register</module>
         <module>../base-auth</module>
         <module>../base-gateway</module>
+        <module>../base-server</module>
     </modules>
 
     <parent>
