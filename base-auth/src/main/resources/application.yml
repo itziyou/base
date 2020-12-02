@@ -4,6 +4,22 @@ server:
 spring:
   application:
     name: BASE-Auth
+  datasource:
+    dynamic:
+      hikari:
+        connection-timeout: 30000
+        max-lifetime: 1800000
+        max-pool-size: 15
+        min-idle: 5
+        connection-test-query: select 1
+        pool-name: BaseHikariCP
+      primary: base
+      datasource:
+        base:
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://localhost:3306/base_cloud?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
 
   redis:
     host: 192.168.56.129
@@ -34,3 +50,14 @@ eureka:
     service-url:
       # 指定Eureka服务端地址
       defaultZone: http://admin:123456@localhost:8001/register/eureka/
+
+
+mybatis-plus:
+  # 指定MyBatis XML文件路径
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    # 指定为null，否则再插入空值时会报“无效的列类型”错误
+    jdbc-type-for-null: null
+  global-config:
+    # 设置为false关闭MyBatis Plus Banner打印
+    banner: false
