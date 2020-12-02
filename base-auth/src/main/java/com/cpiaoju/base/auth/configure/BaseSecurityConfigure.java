@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
@@ -25,11 +24,12 @@ public class BaseSecurityConfigure extends WebSecurityConfigurerAdapter {
     @Autowired
     private BaseUserDetailService userDetailService;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        // BCryptPasswordEncoder 的特点就是，对于一个相同的密码，每次加密出来的加密串都不同：
-        return new BCryptPasswordEncoder();
-    }
+    /**
+     * BCryptPasswordEncoder 的特点就是，对于一个相同的密码，每次加密出来的加密串都不同：
+     */
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @Bean
     @Override
@@ -50,6 +50,6 @@ public class BaseSecurityConfigure extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder);
     }
 }
