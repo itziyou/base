@@ -26,7 +26,7 @@ spring:
     database: 1
     password: 123456
     port: 6666
-    jedis:
+    lettuce:
       pool:
         max-active: 2000
         max-wait: 10000
