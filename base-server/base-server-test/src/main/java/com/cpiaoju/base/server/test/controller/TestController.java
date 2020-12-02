@@ -15,6 +15,7 @@ public class TestController {
     @GetMapping("test1")
     @PreAuthorize("hasAnyAuthority('user:add')")
     public String test1() {
+        int i = 1 / 0;
         return "拥有'user:add'权限";
     }
 

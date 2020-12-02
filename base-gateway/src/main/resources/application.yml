@@ -19,6 +19,9 @@ eureka:
       defaultZone: http://admin:123456@localhost:8001/register/eureka/
 
 zuul:
+  SendErrorFilter:
+    error:
+      disable: true
   routes:
     auth:
       # 所有以 /auth 开头的请求都会被转发到名称为 BASE-Auth 的服务上
@@ -49,3 +52,4 @@ zuul:
 # 设置请求超时时间，单位为毫秒
 ribbon:
   ReadTimeout: 3000
+  ConnectTimeout: 3000

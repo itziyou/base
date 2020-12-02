@@ -3,6 +3,7 @@ package com.cpiaoju.base.auth.configure;
 import com.cpiaoju.base.auth.properties.BaseAuthProperties;
 import com.cpiaoju.base.auth.properties.BaseClientsProperties;
 import com.cpiaoju.base.auth.service.BaseUserDetailService;
+import com.cpiaoju.base.auth.translator.BaseWebResponseExceptionTranslator;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,8 @@ public class BaseAuthorizationServerConfigure extends AuthorizationServerConfigu
     private PasswordEncoder passwordEncoder;
     @Autowired
     private BaseAuthProperties authProperties;
+    @Autowired
+    private BaseWebResponseExceptionTranslator exceptionTranslator;
 
 
     @Override
@@ -87,10 +90,12 @@ public class BaseAuthorizationServerConfigure extends AuthorizationServerConfigu
     }
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+    @SuppressWarnings("all")
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.tokenStore(tokenStore())
                 .userDetailsService(userDetailService)
                 .authenticationManager(authenticationManager)
-                .tokenServices(defaultTokenServices());
+                .tokenServices(defaultTokenServices())
+                .exceptionTranslator(exceptionTranslator);
     }
 }
