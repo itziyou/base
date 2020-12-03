@@ -1,45 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.cpiaoju</groupId>
-		<artifactId>base-cloud</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
-		<relativePath>../base-cloud/pom.xml</relativePath>
-	</parent>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.cpiaoju</groupId>
+        <artifactId>base-cloud</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../base-cloud/pom.xml</relativePath>
+    </parent>
 
-	<artifactId>base-gateway</artifactId>
-	<name>BASE-Gateway</name>
-	<description>微服务网关</description>
-
-
-	<dependencies>
-		<dependency>
-			<groupId>com.cpiaoju</groupId>
-			<artifactId>base-common</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.alibaba.csp</groupId>
-			<artifactId>sentinel-zuul-adapter</artifactId>
-			<version>1.8.0</version>
-		</dependency>
+    <artifactId>base-gateway</artifactId>
+    <name>BASE-Gateway</name>
+    <description>微服务网关</description>
 
 
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>com.cpiaoju</groupId>
+            <artifactId>base-common</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <exclusions>
+                <!--因为Spring Cloud Gateway不是基于Servlet编程模型，而是基于webflux。
+                如果非要web支持的话需要导入spring-boot-starter-webflux而不是spring-boot-start-web；
+                -->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+				<!--
+				网关模块没有使用到数据库和Redis，所以排除mybatis-plus-boot-starter和spring-boot-starter-data-redis依赖；
+				-->
+                <exclusion>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>mybatis-plus-boot-starter</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-redis</artifactId>
+                </exclusion>
+				<!--
+				因为网关只是做请求转发，认证授权由认证服务器和资源服务器完成，所以我们排除了spring-cloud-starter-oauth2和spring-cloud-starter-security依赖
+				-->
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-oauth2</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-security</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-spring-cloud-gateway-adapter</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+
+
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

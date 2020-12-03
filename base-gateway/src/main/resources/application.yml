@@ -4,8 +4,47 @@ server:
 spring:
   application:
     name: BASE-Gateway
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration,org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  cloud:
+    gateway:
+      routes:
+        # 路由ID，保持唯一即可
+        - id: BASE-Auth
+          # 路由的目标地址，可以指定为HTTP地址，也可以通过lb://{微服务名称}来指定。
+          # lb为load balance的缩写，微服务名称为注册中心中对应的微服务名称。
+          # 比如将uri配置为lb://BASE-Auth的含义是，满足转发条件后，请求将均衡的转发到BASE-Auth微服务上
+          uri: lb://BASE-Auth
+          # 就是上面所说的谓词工厂。值为- Path=/auth/**表示请求Path以/auth开头的都会被匹配，然后转发到BASE-Auth服务上；
+          predicates:
+            - Path=/auth/**
+          filters:
+            # 指定添加Hystrix过滤器
+            - name: Hystrix
+              args:
+                # 指定HystrixCommandKey为authfallback
+                name: authfallback
+                # fallbackUri指定了回退的重定向地址。
+                fallbackUri: forward:/fallback/BASE-Auth
+        - id: BASE-Server-System
+          uri: lb://BASE-Server-System
+          predicates:
+            - Path=/system/**
+          filters:
+            - name: Hystrix
+              args:
+                name: systemfallback
+                fallbackUri: forward:/fallback/BASE-Server-System
+        - id: Base-Server-test
+          uri: lb://Base-Server-Test
+          predicates:
+            - Path=/test/**
+          filters:
+            - name: Hystrix
+              args:
+                name: testfallback
+                fallbackUri: forward:/fallback/BASE-Server-Test
+      # filters为过滤器工厂，配置为- StripPrefix=1的意思是，请求转发前，将Path的内容截去前面一位。比如/auth/hello会被截取为/hello
+      default-filters:
+        - StripPrefix=1
 
 eureka:
   instance:
@@ -18,38 +57,11 @@ eureka:
     serviceUrl:
       defaultZone: http://admin:123456@localhost:8001/register/eureka/
 
-zuul:
-  SendErrorFilter:
-    error:
-      disable: true
-  routes:
-    auth:
-      # 所有以 /auth 开头的请求都会被转发到名称为 BASE-Auth 的服务上
-      path: /auth/**
-      serviceId: BASE-Auth
-      # 由于我们需要在请求头中携带令牌，所以sensitiveHeaders设置为*，表示不过滤请求头信息，即请求的请求头信息将原封不动的转发出去
-      sensitiveHeaders: "*"
-    system:
-      # 所有以 /system 开头的请求都会被转发到名称为 Base-Server-System 的服务上
-      path: /system/**
-      serviceId: Base-Server-System
-      sensitiveHeaders: "*"
-    test:
-      # 所有以 /test 开头的请求都会被转发到名称为 BASE-Server-Test 的服务上
-      path: /test/**
-      serviceId: BASE-Server-Test
-      sensitiveHeaders: "*"
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
 
-  # 设置为true时，表示开启重试机制
-  retryable: true
-  # Zuul配合Eureka后会有一套默认的配置规则，这里我们只想请求根据我们显示配置的路由规则走，所以设置为*，表示关闭所有默认路由配置规则
-  ignored-services: "*"
-  ribbon:
-    eager-load:
-      # 设置为true的时候表示开启Ribbon的饥饿加载模式，即在应用启动的时候就去获取相应的Client备用
-      enabled: true
-
-# 设置请求超时时间，单位为毫秒
-ribbon:
-  ReadTimeout: 3000
-  ConnectTimeout: 3000
