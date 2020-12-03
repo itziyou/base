@@ -4,8 +4,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.cpiaoju.base.common.annotation.IsMobile;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -56,6 +60,7 @@ public class SystemUser implements Serializable {
     /**
      * 用户名
      */
+    @Size(min = 4, max = 10, message = "{range}")
     private String username;
 
     /**
@@ -71,16 +76,20 @@ public class SystemUser implements Serializable {
     /**
      * 邮箱
      */
+    @Size(max = 50, message = "{noMoreThan}")
+    @Email(message = "{email}")
     private String email;
 
     /**
      * 联系电话
      */
+    @IsMobile(message = "{mobile}")
     private String mobile;
 
     /**
      * 状态 0锁定 1有效
      */
+    @NotBlank(message = "{required}")
     private String status;
 
     /**
@@ -101,6 +110,7 @@ public class SystemUser implements Serializable {
     /**
      * 性别 0男 1女 2 保密
      */
+    @NotBlank(message = "{required}")
     private String gender;
 
     /**
@@ -111,6 +121,7 @@ public class SystemUser implements Serializable {
     /**
      * 描述
      */
+    @Size(max = 100, message = "{noMoreThan}")
     private String description;
 
     /**

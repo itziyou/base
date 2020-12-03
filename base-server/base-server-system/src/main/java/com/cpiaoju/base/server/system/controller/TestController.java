@@ -18,10 +18,10 @@ public class TestController {
 
     @GetMapping("info")
     public String test() {
-        return "febs-server-system";
+        return "base-server-system";
     }
 
-    @GetMapping("user")
+    @GetMapping("currentUser")
     public Principal currentUser(Principal principal) {
         return principal;
     }

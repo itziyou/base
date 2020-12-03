@@ -4,8 +4,36 @@ server:
 spring:
   application:
     name: BASE-Server-System
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration,org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  datasource:
+    dynamic:
+      hikari:
+        connection-timeout: 30000
+        max-lifetime: 1800000
+        max-pool-size: 15
+        min-idle: 5
+        connection-test-query: select 1
+        pool-name: BaseHikariCP
+      primary: base
+      datasource:
+        base:
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://localhost:3306/base_cloud?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
+      p6spy: true
+
+  redis:
+    host: 192.168.56.129
+    database: 1
+    password: 123456
+    port: 6666
+    lettuce:
+      pool:
+        max-active: 2000
+        max-wait: 10000
+        min-idle: 8
+        max-idle: 500
+    timeout: 5000
 
 security:
   oauth2:
@@ -14,8 +42,6 @@ security:
       # 到认证服务器里校验当前请求头中的令牌是否为合法的令牌
       # 通过当前令牌获取对应的用户信息
       user-info-uri: http://localhost:8301/auth/user
-
-
 
 eureka:
   instance:
@@ -26,3 +52,10 @@ eureka:
     instance-info-replication-interval-seconds: 30
     serviceUrl:
       defaultZone: http://admin:123456@localhost:8001/register/eureka/
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*/*.xml
+  configuration:
+    jdbc-type-for-null: null
+  global-config:
+    banner: false

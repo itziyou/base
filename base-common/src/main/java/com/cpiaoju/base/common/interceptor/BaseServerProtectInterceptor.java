@@ -25,10 +25,10 @@ public class BaseServerProtectInterceptor implements HandlerInterceptor {
         if (StringUtils.equals(zuulToken, token)) {
             return true;
         } else {
-            BaseResponse febsResponse = new BaseResponse();
+            BaseResponse baseResponse = new BaseResponse();
             BaseUtil.makeResponse(
                     response, "application/json;charset=UTF-8",
-                    HttpServletResponse.SC_FORBIDDEN, febsResponse.message("请通过网关获取资源"));
+                    HttpServletResponse.SC_FORBIDDEN, baseResponse.message("请通过网关获取资源"));
             return false;
         }
     }
