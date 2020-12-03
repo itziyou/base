@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
 
+/**
+ * @author ziyou
+ */
 @RestController
 public class SecurityController {
 
