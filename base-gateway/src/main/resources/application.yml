@@ -34,7 +34,7 @@ spring:
                 name: systemfallback
                 fallbackUri: forward:/fallback/BASE-Server-System
         - id: Base-Server-test
-          uri: lb://Base-Server-Test
+          uri: lb://BASE-Server-Test
           predicates:
             - Path=/test/**
           filters:
@@ -46,16 +46,11 @@ spring:
       default-filters:
         - StripPrefix=1
 
-eureka:
-  instance:
-    lease-renewal-interval-in-seconds: 20
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    instance-info-replication-interval-seconds: 30
-    registry-fetch-interval-seconds: 3
-    serviceUrl:
-      defaultZone: http://admin:123456@localhost:8001/register/eureka/
+
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8001
+
 
 hystrix:
   command:

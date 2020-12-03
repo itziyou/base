@@ -35,6 +35,11 @@ spring:
         max-idle: 500
     timeout: 5000
 
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8001
+
 security:
   oauth2:
     resource:
@@ -43,15 +48,6 @@ security:
       # 通过当前令牌获取对应的用户信息
       user-info-uri: http://localhost:8301/auth/user
 
-eureka:
-  instance:
-    lease-renewal-interval-in-seconds: 20
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    instance-info-replication-interval-seconds: 30
-    serviceUrl:
-      defaultZone: http://admin:123456@localhost:8001/register/eureka/
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*/*.xml
