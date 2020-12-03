@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: BASE-Auth
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8001
+      config:
+        # 指定nacos配置中心的IP和端口
+        server-addr: 127.0.0.1:8001
+        # 指定配置分组名称，这里保持默认的DEFAULT_GROUP即可
+        group: DEFAULT_GROUP
+        # 指定在nacos配置中心对应微服务配置的前缀，这里指定为base-auth
+        prefix: base-auth
+        # 指定微服务配置文件的类型，可选值有yaml和properties，这里指定为yaml。
+        file-extension: yaml
