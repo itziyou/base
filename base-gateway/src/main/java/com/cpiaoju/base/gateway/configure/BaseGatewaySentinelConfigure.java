@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * <p> GatewaySentinel 限流配置类</p>
+ *
  * @author ziyou
  */
 @Configuration

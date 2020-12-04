@@ -9,6 +9,8 @@ import org.springframework.security.oauth2.provider.authentication.OAuth2Authent
 import org.springframework.util.Base64Utils;
 
 /**
+ * <p>开启带令牌的Feign请求，避免微服务内部调用出现401异常</p>
+ *
  * @author ziyou
  */
 public class BaseOAuth2FeignConfigure {
@@ -16,9 +18,9 @@ public class BaseOAuth2FeignConfigure {
     @Bean
     public RequestInterceptor oauth2FeignRequestInterceptor() {
         return requestTemplate -> {
-            // 添加 Zuul Token
-            String zuulToken = new String(Base64Utils.encode(BaseConstant.ZUUL_TOKEN_VALUE.getBytes()));
-            requestTemplate.header(BaseConstant.ZUUL_TOKEN_HEADER, zuulToken);
+            // 添加 gateWay Token
+            String gatewayToken = new String(Base64Utils.encode(BaseConstant.GATEWAY_TOKEN_VALUE.getBytes()));
+            requestTemplate.header(BaseConstant.GATEWAY_TOKEN_HEADER, gatewayToken);
 
             Object details = SecurityContextHolder.getContext().getAuthentication().getDetails();
             if (details instanceof OAuth2AuthenticationDetails) {

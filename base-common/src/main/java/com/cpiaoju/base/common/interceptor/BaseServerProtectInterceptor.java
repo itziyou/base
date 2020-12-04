@@ -18,11 +18,11 @@ public class BaseServerProtectInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
-        // 从请求头中获取 Zuul Token
-        String token = request.getHeader(BaseConstant.ZUUL_TOKEN_HEADER);
-        String zuulToken = new String(Base64Utils.encode(BaseConstant.ZUUL_TOKEN_VALUE.getBytes()));
-        // 校验 Zuul Token的正确性
-        if (StringUtils.equals(zuulToken, token)) {
+        // 从请求头中获取 gateway Token
+        String token = request.getHeader(BaseConstant.GATEWAY_TOKEN_HEADER);
+        String gatewayToken = new String(Base64Utils.encode(BaseConstant.GATEWAY_TOKEN_VALUE.getBytes()));
+        // 校验 gateway Token的正确性
+        if (StringUtils.equals(gatewayToken, token)) {
             return true;
         } else {
             BaseResponse baseResponse = new BaseResponse();

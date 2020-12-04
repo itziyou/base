@@ -17,6 +17,10 @@ import java.util.regex.Pattern;
 @Slf4j
 public class BaseUtil {
 
+    private BaseUtil() {
+
+    }
+
     /**
      * 设置响应
      *

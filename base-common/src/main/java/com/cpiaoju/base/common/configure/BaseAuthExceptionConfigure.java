@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 
 /**
+ * <p>认证类型异常翻译</p>
+ *
  * @author ziyou
  */
 public class BaseAuthExceptionConfigure {

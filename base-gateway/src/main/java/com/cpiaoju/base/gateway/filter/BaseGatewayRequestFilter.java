@@ -5,10 +5,10 @@ import cn.hutool.json.JSONUtil;
 import com.cpiaoju.base.common.constant.BaseConstant;
 import com.cpiaoju.base.common.entity.BaseResponse;
 import com.cpiaoju.base.gateway.properties.BaseGatewayProperties;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.route.Route;
@@ -33,10 +33,10 @@ import java.util.LinkedHashSet;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class BaseGatewayRequestFilter implements GlobalFilter {
 
-    @Autowired
-    private BaseGatewayProperties properties;
+    private final BaseGatewayProperties properties;
     private AntPathMatcher pathMatcher = new AntPathMatcher();
 
 
@@ -54,8 +54,8 @@ public class BaseGatewayRequestFilter implements GlobalFilter {
         //日志打印
         this.printLog(exchange);
 
-        byte[] token = Base64Utils.encode((BaseConstant.ZUUL_TOKEN_VALUE).getBytes());
-        ServerHttpRequest build = request.mutate().header(BaseConstant.ZUUL_TOKEN_HEADER, new String(token)).build();
+        byte[] token = Base64Utils.encode((BaseConstant.GATEWAY_TOKEN_VALUE).getBytes());
+        ServerHttpRequest build = request.mutate().header(BaseConstant.GATEWAY_TOKEN_HEADER, new String(token)).build();
         ServerWebExchange newExchange = exchange.mutate().request(build).build();
         return chain.filter(newExchange);
     }
@@ -98,7 +98,7 @@ public class BaseGatewayRequestFilter implements GlobalFilter {
         if (url != null && route != null && originUri != null) {
             log.info("转发请求：{}://{}{} --> 目标服务：{}，目标地址：{}://{}{}，转发时间：{}",
                     originUri.getScheme(), originUri.getAuthority(), originUri.getPath(),
-                    route.getId(), url.getScheme(), url.getAuthority(), url.getPath(), DateUtil.format(LocalDateTime.now(),"yyyy-MM-dd HH:mm:ss")
+                    route.getId(), url.getScheme(), url.getAuthority(), url.getPath(), DateUtil.format(LocalDateTime.now(), "yyyy-MM-dd HH:mm:ss")
             );
         }
     }

@@ -15,8 +15,8 @@ public class BaseCloudApplicationSelector implements ImportSelector {
     public String[] selectImports(AnnotationMetadata annotationMetadata) {
 
         // BaseAuthExceptionConfigure 认证类型异常翻译；
-        // BaseServerProtectConfigure 开启微服务防护，避免客户端绕过网关直接请求微服务；
         // BaseOAuth2FeignConfigure 开启带令牌的Feign请求，避免微服务内部调用出现401异常；
+        // BaseServerProtectConfigure 开启微服务防护，避免客户端绕过网关直接请求微服务；
         return new String[]{
                 BaseAuthExceptionConfigure.class.getName(),
                 BaseOAuth2FeignConfigure.class.getName(),

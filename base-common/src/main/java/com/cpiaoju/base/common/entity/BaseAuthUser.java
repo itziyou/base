@@ -1,7 +1,9 @@
 package com.cpiaoju.base.common.entity;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
@@ -11,7 +13,9 @@ import java.util.Date;
 /**
  * @author ziyou
  */
-@Data
+@Getter
+@Setter
+@ToString
 @EqualsAndHashCode(callSuper = true)
 public class BaseAuthUser extends User {
 

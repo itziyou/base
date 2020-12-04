@@ -10,6 +10,8 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
+ * <p>开启微服务防护，避免客户端绕过网关直接请求微服务</p>
+ *
  * @author ziyou
  */
 public class BaseServerProtectConfigure implements WebMvcConfigurer {
