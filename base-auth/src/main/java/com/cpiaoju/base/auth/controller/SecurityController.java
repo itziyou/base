@@ -5,7 +5,7 @@ import com.cpiaoju.base.auth.service.ValidateCodeService;
 import com.cpiaoju.base.common.entity.BaseResponse;
 import com.cpiaoju.base.common.exception.BaseAuthException;
 import com.cpiaoju.base.common.exception.ValidateCodeException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +20,11 @@ import java.security.Principal;
  * @author ziyou
  */
 @RestController
+@RequiredArgsConstructor
 public class SecurityController {
 
-    @Autowired
-    private ConsumerTokenServices consumerTokenServices;
-    @Autowired
-    private ValidateCodeService validateCodeService;
+    private final ConsumerTokenServices consumerTokenServices;
+    private final ValidateCodeService validateCodeService;
 
     @GetMapping("captcha")
     public void captcha(HttpServletRequest request, HttpServletResponse response) throws IOException, ValidateCodeException {

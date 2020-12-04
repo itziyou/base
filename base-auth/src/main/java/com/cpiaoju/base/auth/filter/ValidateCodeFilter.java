@@ -4,11 +4,10 @@ import com.cpiaoju.base.auth.service.ValidateCodeService;
 import com.cpiaoju.base.common.entity.BaseResponse;
 import com.cpiaoju.base.common.exception.ValidateCodeException;
 import com.cpiaoju.base.common.util.BaseUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
@@ -25,10 +24,10 @@ import java.io.IOException;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class ValidateCodeFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private ValidateCodeService validateCodeService;
+    private final ValidateCodeService validateCodeService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {

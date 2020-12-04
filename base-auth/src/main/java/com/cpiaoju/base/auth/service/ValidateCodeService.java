@@ -8,8 +8,8 @@ import com.cpiaoju.base.common.service.RedisService;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -22,11 +22,11 @@ import java.io.IOException;
  * @author ziyou
  */
 @Service
+@RequiredArgsConstructor
 public class ValidateCodeService {
-    @Autowired
-    private RedisService redisService;
-    @Autowired
-    private BaseAuthProperties properties;
+
+    private final RedisService redisService;
+    private final BaseAuthProperties properties;
 
     /**
      * 生成验证码

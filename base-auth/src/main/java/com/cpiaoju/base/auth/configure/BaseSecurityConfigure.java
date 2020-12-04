@@ -2,7 +2,7 @@ package com.cpiaoju.base.auth.configure;
 
 import com.cpiaoju.base.auth.filter.ValidateCodeFilter;
 import com.cpiaoju.base.auth.service.BaseUserDetailService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,19 +21,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Order(2)
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class BaseSecurityConfigure extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private BaseUserDetailService userDetailService;
+    private final BaseUserDetailService userDetailService;
 
     /**
      * BCryptPasswordEncoder 的特点就是，对于一个相同的密码，每次加密出来的加密串都不同：
      */
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private ValidateCodeFilter validateCodeFilter;
+    private final PasswordEncoder passwordEncoder;
+    private final ValidateCodeFilter validateCodeFilter;
 
 
     @Bean

@@ -11,7 +11,7 @@ import com.cpiaoju.base.common.entity.system.UserRole;
 import com.cpiaoju.base.server.system.mapper.UserMapper;
 import com.cpiaoju.base.server.system.service.IUserRoleService;
 import com.cpiaoju.base.server.system.service.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,13 +25,12 @@ import java.util.List;
  * @author ziyou
  */
 @Service
+@RequiredArgsConstructor
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> implements IUserService {
 
-    @Autowired
-    private IUserRoleService userRoleService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final IUserRoleService userRoleService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public IPage<SystemUser> findUserDetail(SystemUser user, QueryRequest request) {

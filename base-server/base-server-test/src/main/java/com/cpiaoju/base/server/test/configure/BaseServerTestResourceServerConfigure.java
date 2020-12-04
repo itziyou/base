@@ -2,7 +2,7 @@ package com.cpiaoju.base.server.test.configure;
 
 import com.cpiaoju.base.common.handler.BaseAccessDeniedHandler;
 import com.cpiaoju.base.common.handler.BaseAuthExceptionEntryPoint;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -14,12 +14,11 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
  */
 @Configuration
 @EnableResourceServer
+@RequiredArgsConstructor
 public class BaseServerTestResourceServerConfigure extends ResourceServerConfigurerAdapter {
 
-    @Autowired
-    private BaseAccessDeniedHandler accessDeniedHandler;
-    @Autowired
-    private BaseAuthExceptionEntryPoint exceptionEntryPoint;
+    private final BaseAccessDeniedHandler accessDeniedHandler;
+    private final BaseAuthExceptionEntryPoint exceptionEntryPoint;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {

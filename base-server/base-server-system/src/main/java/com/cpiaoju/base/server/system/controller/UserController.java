@@ -7,8 +7,8 @@ import com.cpiaoju.base.common.entity.system.SystemUser;
 import com.cpiaoju.base.common.exception.BaseException;
 import com.cpiaoju.base.common.util.BaseUtil;
 import com.cpiaoju.base.server.system.service.IUserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +24,10 @@ import java.util.Map;
 @Validated
 @RestController
 @RequestMapping("user")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private IUserService userService;
+    private final IUserService userService;
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority('user:view')")

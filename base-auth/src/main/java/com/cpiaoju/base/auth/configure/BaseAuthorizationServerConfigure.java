@@ -4,9 +4,9 @@ import com.cpiaoju.base.auth.properties.BaseAuthProperties;
 import com.cpiaoju.base.auth.properties.BaseClientsProperties;
 import com.cpiaoju.base.auth.service.BaseUserDetailService;
 import com.cpiaoju.base.auth.translator.BaseWebResponseExceptionTranslator;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -29,20 +29,15 @@ import java.util.UUID;
  */
 @Configuration
 @EnableAuthorizationServer
+@RequiredArgsConstructor
 public class BaseAuthorizationServerConfigure extends AuthorizationServerConfigurerAdapter {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private RedisConnectionFactory redisConnectionFactory;
-    @Autowired
-    private BaseUserDetailService userDetailService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private BaseAuthProperties authProperties;
-    @Autowired
-    private BaseWebResponseExceptionTranslator exceptionTranslator;
+    private final AuthenticationManager authenticationManager;
+    private final RedisConnectionFactory redisConnectionFactory;
+    private final BaseUserDetailService userDetailService;
+    private final PasswordEncoder passwordEncoder;
+    private final BaseAuthProperties authProperties;
+    private final BaseWebResponseExceptionTranslator exceptionTranslator;
 
 
     @Override

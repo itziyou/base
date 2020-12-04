@@ -3,9 +3,9 @@ package com.cpiaoju.base.auth.service;
 import com.cpiaoju.base.auth.manager.UserManager;
 import com.cpiaoju.base.common.entity.BaseAuthUser;
 import com.cpiaoju.base.common.entity.system.SystemUser;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
  * @author ziyou
  */
 @Service
+@RequiredArgsConstructor
 public class BaseUserDetailService implements UserDetailsService {
 
-    @Autowired
-    private UserManager userManager;
+    private final UserManager userManager;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

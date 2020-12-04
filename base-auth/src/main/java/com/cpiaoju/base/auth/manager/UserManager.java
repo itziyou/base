@@ -4,7 +4,7 @@ import com.cpiaoju.base.auth.mapper.MenuMapper;
 import com.cpiaoju.base.auth.mapper.UserMapper;
 import com.cpiaoju.base.common.entity.system.Menu;
 import com.cpiaoju.base.common.entity.system.SystemUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,12 +14,11 @@ import java.util.stream.Collectors;
  * @author ziyou
  */
 @Service
+@RequiredArgsConstructor
 public class UserManager {
 
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private MenuMapper menuMapper;
+    private final UserMapper userMapper;
+    private final MenuMapper menuMapper;
 
     public SystemUser findByName(String username) {
         return userMapper.findByName(username);

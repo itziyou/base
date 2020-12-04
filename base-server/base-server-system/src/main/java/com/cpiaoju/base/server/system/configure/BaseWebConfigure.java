@@ -13,6 +13,10 @@ import org.springframework.context.annotation.Configuration;
 @MapperScan("com.cpiaoju.base.server.system.mapper")
 public class BaseWebConfigure {
 
+    /**
+     * 注册 mybatis plus 分页插件
+     * @return
+     */
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
